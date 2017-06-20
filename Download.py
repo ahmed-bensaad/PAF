@@ -10,10 +10,10 @@ import requests
 def geturls(L):
     item_type = "REOrthoTile"
     asset_type = "visual"
-    os.system("export PLANET_API_KEY=2f17fa8a5d774ad9bf62d6e4d14fd25d")
+   # os.system("export PLANET_API_KEY=2f17fa8a5d774ad9bf62d6e4d14fd25d")
     for i in range(len(L)):
         item_id = L[i]
-        print("Début aquisition du "+str(i+1)+"éme lien de photo satellite sur"+str(len(L)+1))
+        print("Début aquisition: Photo "+str(i+1)+" sur "+str(len(L)+1))
 
 # setup auth
         session = requests.Session()
@@ -24,7 +24,7 @@ def geturls(L):
         session.get(
             ("https://api.planet.com/data/v1/item-types/" +
             "{}/items/{}/assets/").format(item_type, item_id))
-
+        print item.text
 # extract the activation url from the item for the desired asset
         item_activation_url = item.json()[asset_type]["_links"]["activate"]
     
