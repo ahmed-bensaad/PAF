@@ -1,17 +1,3 @@
-#def setcoords():
-#    L=[]
-#    print("saisissez les coordonnées: absisse et ordonnées séparée par un espace, deux points séparés par une virgule")
-#    ch=input()
-#    L=ch.split(',')
-#    for i in range (len(L)):
-#        L[i]=L[i].split(' ')
-#    geo_json_geometry["coordinates"]=[L]
-#    
-#def settime():
-#    print("Saisissez la date de début: format aaa-mm-jjThh:mm:ss.000Z")
-#    ch=input()
-#    
-
 geo_json_geometry = {
   "type": "Polygon",
   "coordinates": [
@@ -72,3 +58,6 @@ redding_reservoir = {
   "type": "AndFilter",
   "config": [geometry_filter, date_range_filter, cloud_cover_filter]
 }
+
+
+
