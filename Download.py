@@ -47,7 +47,7 @@ def geturls(L):
             print ("\033[32mAutorisation accordée\033[32m")
             
             print("\033[33mDébut téléchargement\033[0m")
-            os.system("curl -L -o 'image"+str(i+1)+"' "+ch[0])
+            os.system("curl -L -o '/cal/homes/abensaad/Desktop/PAF/PAF/image"+str(i+1)+"' "+ch[0])
             print("\033[32mFin téléchargement\033[0m")
         else:
             
