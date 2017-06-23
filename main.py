@@ -25,9 +25,10 @@ a=json.loads(result.text)
 L= [a['features'][i]['id'] for i in range(len(a['features']))]
 S= [a['features'][i]['properties']['acquired']for i in range(len(a['features']))]
 M= [a['features'][i]['properties']['satellite_id']for i in range(len(a['features']))]
+##print a['features'][i]['properties'].keys()
 #print S
 #print L
-print type(S[0])
+#print type(S[0])
 print('Copie de donnees')
 file=open('/cal/homes/abensaad/Desktop/PAF/PAF/data.txt','w')
 for i in range(len(a['features'])):
