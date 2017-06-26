@@ -8,8 +8,9 @@ import time
 import os
 import requests
 def geturls(L):
-    item_type = "PSOrthoTile"
+    item_type = "REOrthoTile"
     asset_type = "analytic"
+    asset_type2 = "visual"
    # os.system("export PLANET_API_KEY=2f17fa8a5d774ad9bf62d6e4d14fd25d")
     for i in range(len(L)):
         item_id = L[i]
@@ -27,32 +28,41 @@ def geturls(L):
       # print item.text
 # extract the activation url from the item for the desired asset
         item_activation_url = item.json()[asset_type]["_links"]["activate"]
+        item_activation_url2 = item.json()[asset_type2]["_links"]["activate"]
 
         print("\033[33mDemande d'activation\033[0m")
         response = session.post(item_activation_url)
+        response2 = session.post(item_activation_url2)        
         print response
-        while response.status_code==202:
-            time.sleep(5)
+        print response2
+        while response.status_code==202 or response2.status_code==202:
+            time.sleep(2)
             response = session.post(item_activation_url)
-
+            response2 = session.post(item_activation_url2)
 
 
         if(response.status_code)==204:
             print("\033[32mActivation réussie!! Aquisition du lien de la photo\033[0m")
             ch=os.popen("curl -L -H "+ '"' + "Authorization: api-key $PLANET_API_KEY" + '"' +" 'https://api.planet.com/data/v1/item-types/"+item_type+"/items/"+item_id+"/assets/' \
             | jq ."+asset_type+".location ").readlines()
+            ch1=os.popen("curl -L -H "+ '"' + "Authorization: api-key $PLANET_API_KEY" + '"' +" 'https://api.planet.com/data/v1/item-types/"+item_type+"/items/"+item_id+"/assets/' \
+            | jq ."+asset_type2+".location ").readlines()
 
             print("\033[32mLien aquis! Fin aquisition photo "+str(i+1)+"\033[32m")
 
             print("\033[33mVérification de l'autorisation de téléchargement \033[0m")
-            ch1=os.popen("curl -L -H "+ '"' + "Authorization: api-key $PLANET_API_KEY" + '"' +" 'https://api.planet.com/data/v1/item-types/"+item_type+"/items/"+item_id+"/assets/' \
+            ch2=os.popen("curl -L -H "+ '"' + "Authorization: api-key $PLANET_API_KEY" + '"' +" 'https://api.planet.com/data/v1/item-types/"+item_type+"/items/"+item_id+"/assets/' \
             | jq ."+asset_type+"._permissions ").readlines()
-            if ch1== ['[\n', '  "download"\n', ']\n']:
+            ch3=os.popen("curl -L -H "+ '"' + "Authorization: api-key $PLANET_API_KEY" + '"' +" 'https://api.planet.com/data/v1/item-types/"+item_type+"/items/"+item_id+"/assets/' \
+            | jq ."+asset_type2+"._permissions ").readlines()
+            if ch2== ['[\n', '  "download"\n', ']\n'] and ch3==['[\n', '  "download"\n', ']\n']:
 
                 print ("\033[32mAutorisation accordée\033[32m")
 
                 print("\033[33mDébut téléchargement\033[0m")
-                os.system("curl -L -o '/cal/homes/abensaad/Desktop/PAF/PAF/image"+str(i+1)+"' "+ch[0])
+                os.system("curl -L -o '/cal/homes/abensaad/Desktop/PAF/PAF/"+asset_type+str(i+1)+"' "+ch[0])
+                print ("fin téléchargement analytic")
+                os.system("curl -L -o '/cal/homes/abensaad/Desktop/PAF/PAF/"+asset_type2+str(i+1)+"' "+ch1[0])
                 print("\033[32mFin téléchargement\033[0m")
         else:
 

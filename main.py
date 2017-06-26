@@ -9,7 +9,7 @@ from demo_filters import redding_reservoir
 os.environ["PLANET_API_KEY"]="ae618a9b4c4448d4a1fbd71851ce835b"
 # Search API request object
 search_endpoint_request = {
-  "item_types": ["PSOrthoTile"],
+  "item_types": ["REOrthoTile"],
   "filter": redding_reservoir
 }
 
