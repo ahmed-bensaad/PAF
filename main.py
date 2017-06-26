@@ -3,6 +3,8 @@ import requests
 from requests.auth import HTTPBasicAuth
 import Download as dn
 import json
+from demo_filters import date_range_filter 
+from demo_filters import geo_json_geometry
 
 # our demo filter that filters by geometry, date and cloud cover
 from demo_filters import redding_reservoir
@@ -12,6 +14,98 @@ search_endpoint_request = {
   "item_types": ["REOrthoTile"],
   "filter": redding_reservoir
 }
+
+#Automatic input of dates
+date_debut= input("")
+if (date_debut!=""):
+    date_range_filter["config"]["gte"]=date_debut
+
+date_fin= input("")
+if (date_fin!=""):
+    date_range_filter["config"]["lte"]=date_fin
+
+##Automatic input of coordinates
+#L=[]
+#print("debut saisie coordonnees")
+#for i in range(4):
+#    print("x "+str(i+1))
+#    x=float(input(''))
+#    print("y"+str(i+1))    
+#    y=float(input(''))
+#    L.append([x,y])
+#
+#L.append(L[0])
+
+Zone_lists=[[[
+              -117.46444702148436,
+              34.118626335469514
+            ],
+            [
+              -117.16781616210936,
+              34.118626335469514
+            ],
+            [
+              -117.16781616210936,
+              34.31735262740534
+            ],
+            [
+              -117.46444702148436,
+              34.31735262740534
+            ],
+            [
+              -117.46444702148436,
+              34.118626335469514
+            ]],[[
+              -117.20146179199217,
+              32.6833081730721
+            ],
+            [
+              -117.16232299804688,
+              32.6833081730721
+            ],
+            [
+              -117.16232299804688,
+              32.722598604044066
+            ],
+            [
+              -117.20146179199217,
+              32.722598604044066
+            ],
+            [
+              -117.20146179199217,
+              32.6833081730721
+            ]],[[
+              -117.70683288574219,
+              33.93082707134273
+            ],
+            [
+              -117.63954162597658,
+              33.93082707134273
+            ],
+            [
+              -117.63954162597658,
+              33.95759961080361
+            ],
+            [
+              -117.70683288574219,
+              33.95759961080361
+            ],
+            [
+              -117.70683288574219,
+              33.93082707134273
+            ]]]
+
+map_nb=50
+print("saisir le nombre de la zone: entre 1 et 3")
+while(map_nb<1 or map_nb>3):
+    map_nb=int(input(''))
+
+    
+
+
+geo_json_geometry["coordinates"]=[Zone_lists[map_nb-1]]
+
+
 
 result = \
   requests.post(
