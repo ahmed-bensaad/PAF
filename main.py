@@ -6,10 +6,10 @@ import json
 
 # our demo filter that filters by geometry, date and cloud cover
 from demo_filters import redding_reservoir
-os.environ["PLANET_API_KEY"]="2f17fa8a5d774ad9bf62d6e4d14fd25d"
+os.environ["PLANET_API_KEY"]="ae618a9b4c4448d4a1fbd71851ce835b"
 # Search API request object
 search_endpoint_request = {
-  "item_types": ["REOrthoTile"],
+  "item_types": ["PSOrthoTile"],
   "filter": redding_reservoir
 }
 
@@ -25,7 +25,7 @@ a=json.loads(result.text)
 L= [a['features'][i]['id'] for i in range(len(a['features']))]
 S= [a['features'][i]['properties']['acquired']for i in range(len(a['features']))]
 M= [a['features'][i]['properties']['satellite_id']for i in range(len(a['features']))]
-##print a['features'][i]['properties'].keys()
+##print a['features'][i]['properties'].keys()L
 #print S
 #print L
 #print type(S[0])
@@ -42,7 +42,8 @@ for i in range(len(a['features'])):
     file.write('\n')
 file.close()    
 print('fin copie de donnees')
+X=[L[0],L[-1]]
 
-dn.geturls(L)
+dn.geturls(X)
 
 

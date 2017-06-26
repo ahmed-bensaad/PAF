@@ -8,7 +8,7 @@ import time
 import os
 import requests
 def geturls(L):
-    item_type = "REOrthoTile"
+    item_type = "PSOrthoTile"
     asset_type = "analytic"
    # os.system("export PLANET_API_KEY=2f17fa8a5d774ad9bf62d6e4d14fd25d")
     for i in range(len(L)):
@@ -34,19 +34,19 @@ def geturls(L):
         while response.status_code==202:
             time.sleep(5)
             response = session.post(item_activation_url)
-            
-            
-            
+
+
+
         if(response.status_code)==204:
             print("\033[32mActivation réussie!! Aquisition du lien de la photo\033[0m")
-            ch=os.popen("curl -L -H "+ '"' + "Authorization: api-key $PLANET_API_KEY" + '"' +" 'https://api.planet.com/data/v1/item-types/REOrthoTile/items/"+item_id+"/assets/' \
-            | jq .analytic.location ").readlines()
+            ch=os.popen("curl -L -H "+ '"' + "Authorization: api-key $PLANET_API_KEY" + '"' +" 'https://api.planet.com/data/v1/item-types/"+item_type+"/items/"+item_id+"/assets/' \
+            | jq ."+asset_type+".location ").readlines()
 
             print("\033[32mLien aquis! Fin aquisition photo "+str(i+1)+"\033[32m")
 
             print("\033[33mVérification de l'autorisation de téléchargement \033[0m")
-            ch1=os.popen("curl -L -H "+ '"' + "Authorization: api-key $PLANET_API_KEY" + '"' +" 'https://api.planet.com/data/v1/item-types/REOrthoTile/items/"+item_id+"/assets/' \
-            | jq .analytic._permissions ").readlines()
+            ch1=os.popen("curl -L -H "+ '"' + "Authorization: api-key $PLANET_API_KEY" + '"' +" 'https://api.planet.com/data/v1/item-types/"+item_type+"/items/"+item_id+"/assets/' \
+            | jq ."+asset_type+"._permissions ").readlines()
             if ch1== ['[\n', '  "download"\n', ']\n']:
 
                 print ("\033[32mAutorisation accordée\033[32m")
