@@ -113,7 +113,7 @@ map_nb=int(map_nb)
 
 geo_json_geometry["coordinates"]=[Zone_lists[map_nb-1]]
 
-
+datewriter.close()
 
 result = \
   requests.post(
