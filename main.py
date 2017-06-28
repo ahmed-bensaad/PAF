@@ -16,14 +16,20 @@ search_endpoint_request = {
 }
 
 #Automatic input of dates
-date_debut= input("")
-if (date_debut!=""):
-    date_range_filter["config"]["gte"]=date_debut
+#date_debut= input("")
+#if (date_debut!=""):
+try:
+    datewriter= open("date.txt",'r')
+    List_date=datewriter.readlines()
+    List_date[0]=List_date[0].replace("\n",'')
+    List_date[1]=List_date[1].replace("\n",'')
+    date_range_filter["config"]["gte"]=List_date[0]
 
-date_fin= input("")
-if (date_fin!=""):
-    date_range_filter["config"]["lte"]=date_fin
-
+#date_fin= input("")
+#if (date_fin!=""):
+    date_range_filter["config"]["lte"]=List_date[1]
+except:
+    print("Erreur dans les dates")
 ##Automatic input of coordinates
 #L=[]
 #print("debut saisie coordonnees")
@@ -136,8 +142,12 @@ for i in range(len(a['features'])):
     file.write('\n')
 file.close()    
 print('fin copie de donnees')
-X=[L[0],L[-1]]
 
-dn.geturls(X)
+
+#if len(L)>1:
+#    X=[L[0],L[-1]]
+#    dn.geturls(X)
+#else:
+dn.geturls(L)
 
 
