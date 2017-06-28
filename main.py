@@ -3,7 +3,7 @@ import requests
 from requests.auth import HTTPBasicAuth
 import Download as dn
 import json
-from demo_filters import date_range_filter 
+from demo_filters import date_range_filter
 from demo_filters import geo_json_geometry
 
 # our demo filter that filters by geometry, date and cloud cover
@@ -36,7 +36,7 @@ except:
 #for i in range(4):
 #    print("x "+str(i+1))
 #    x=float(input(''))
-#    print("y"+str(i+1))    
+#    print("y"+str(i+1))
 #    y=float(input(''))
 #    L.append([x,y])
 #
@@ -101,12 +101,14 @@ Zone_lists=[[[
               33.93082707134273
             ]]]
 
-map_nb=50
-print("saisir le nombre de la zone: entre 1 et 3")
-while(map_nb<1 or map_nb>3):
-    map_nb=int(input(''))
+#map_nb=50
+#print("saisir le nombre de la zone: entre 1 et 3")
+#while(map_nb<1 or map_nb>3):
+#    map_nb=int(input(''))
+map_nb=List_date[2]
+map_nb=map_nb.replace("\n",'')
+map_nb=int(map_nb)
 
-    
 
 
 geo_json_geometry["coordinates"]=[Zone_lists[map_nb-1]]
@@ -118,8 +120,8 @@ result = \
     'https://api.planet.com/data/v1/quick-search',
     auth=HTTPBasicAuth(os.environ['PLANET_API_KEY'], ''),
     json=search_endpoint_request)
-    
-   
+
+
 a=json.loads(result.text)
 #print a
 L= [a['features'][i]['id'] for i in range(len(a['features']))]
@@ -134,13 +136,13 @@ file=open('/cal/homes/abensaad/Desktop/PAF/PAF/data.txt','w')
 for i in range(len(a['features'])):
     file.write("image "+str(i+1))
     file.write('\n')
-for i in range(len(a['features'])):    
+for i in range(len(a['features'])):
     file.write(str(S[i]))
     file.write('\n')
-for i in range(len(a['features'])):    
+for i in range(len(a['features'])):
     file.write(str(M[i]))
     file.write('\n')
-file.close()    
+file.close()
 print('fin copie de donnees')
 
 
@@ -149,5 +151,3 @@ print('fin copie de donnees')
 #    dn.geturls(X)
 #else:
 dn.geturls(L)
-
-
