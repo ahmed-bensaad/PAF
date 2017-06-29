@@ -132,7 +132,7 @@ M= [a['features'][i]['properties']['satellite_id']for i in range(len(a['features
 #print L
 #print type(S[0])
 print('Copie de donnees')
-file=open('/cal/homes/abensaad/Desktop/PAF/PAF/data.txt','w')
+file=open('data.txt','w')
 for i in range(len(a['features'])):
     file.write("image "+str(i+1))
     file.write('\n')
